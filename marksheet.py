@@ -1,5 +1,4 @@
 import csv
-import math
 import os
 
 file_name = "marksheet.csv"
@@ -14,8 +13,8 @@ def load_data():
         for line in lines[1:]:
             if line.strip() != "":
                 data = line.strip().split(",")
-                student = {
-                    "role no"  : data[0],
+                students = {
+                    "roleno"  : data[0],
                     "name" : data[1],
                     "maths" : data[2],
                     "science" : data[3],
@@ -24,7 +23,7 @@ def load_data():
 
                 }
 
-                students.append(student)
+                students.append(students)
     except FileNotFoundError as e:
         print("file is not found")
         return students
@@ -40,9 +39,9 @@ def save_data(students):
             student["science"] + "," +
             student["english"] + "\n"
         )
-    f.write(line)
+          f.write(line)
     f.close()
-    print("Data Saved Successfully!")
+    print("data saved")
         
 def add_student(students):
     print("\n--add_student--")
@@ -52,7 +51,7 @@ def add_student(students):
     science = input("enter science mark:")
     english= input("enter english mark: ")
 
-    student = {
+    students = {
     "rollno": rollno,
     "name": name,
     "maths": maths,
@@ -61,7 +60,7 @@ def add_student(students):
 
 }
     students.append(student)
-print("student add")
+    print("student add")
 
 
 def view_students(students):
@@ -78,14 +77,39 @@ def view_students(students):
 
         print("viewed")
 
+def edit_student(students):
+
+    rollno = input("enter rollno to edit: ")
+
+    for student in students:
+
+        if student["rollno"] == rollno:
+
+            student["name"] = input("new name: ")
+
+            print("Student edit")
+
+def delete_student(students):
+
+    rollno = input("Enter rollno to delete: ")
+
+    for student in students:
+
+        if student["rollno"] == rollno:
+
+            students.remove(student)
+
+            print("Student deleted")
 student = load_data(
 )
 while True:
     print("--marsksheet---")
-    print("add student")
-    print("view students")
-    print("save and exit")
-    choice = input("Choose (1-3): ")
+    print("1. add student")
+    print("2. view students")
+    print("3. save and exit")
+    print("4. edit student")
+    print("5. delete student")
+    choice = input("Choose (1-5): ")
     
     if choice == "1":
         add_student(student)
@@ -93,7 +117,12 @@ while True:
         view_students(student)
     elif choice == "3":
         save_data(student)
-        print("Goodbye! See you later.")
-        break
-    else:
-        print("Wrong choice! Please choose 1, 2 or 3.")
+    elif choice == "4":
+         edit_student(student)
+
+    elif choice == "5":
+      delete_student(student)
+    print("Goodbye")
+    break
+else:
+        print("wrong choice")
