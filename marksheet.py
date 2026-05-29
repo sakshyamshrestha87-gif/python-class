@@ -13,8 +13,8 @@ def load_data():
         for line in lines[1:]:
             if line.strip() != "":
                 data = line.strip().split(",")
-                students = {
-                    "roleno"  : data[0],
+                student = {
+                    "rollno"  : data[0],
                     "name" : data[1],
                     "maths" : data[2],
                     "science" : data[3],
@@ -24,6 +24,7 @@ def load_data():
                 }
 
                 students.append(students)
+                return students
     except FileNotFoundError as e:
         print("file is not found")
         return students
@@ -51,7 +52,7 @@ def add_student(students):
     science = input("enter science mark:")
     english= input("enter english mark: ")
 
-    students = {
+    student = {
     "rollno": rollno,
     "name": name,
     "maths": maths,
@@ -117,12 +118,14 @@ while True:
         view_students(student)
     elif choice == "3":
         save_data(student)
+        print("save data")
+        break
     elif choice == "4":
          edit_student(student)
 
     elif choice == "5":
       delete_student(student)
-    print("Goodbye")
-    break
-else:
-        print("wrong choice")
+      
+    
+    else:
+         print("wrong choice")
