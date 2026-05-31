@@ -5,29 +5,29 @@ file_name = "marksheet.csv"
 
 def load_data():
     students = []
-    try:
-        file = open(file_name,mode='r', newline = '')
-        lines = file.readlines()
-        file.close()
-
-        for line in lines[1:]:
-            if line.strip() != "":
-                data = line.strip().split(",")
-                student = {
-                    "rollno"  : data[0],
-                    "name" : data[1],
-                    "maths" : data[2],
-                    "science" : data[3],
-                    "english" : data[4]
-
-
-                }
-
-                students.append(students)
-                return students
-    except FileNotFoundError as e:
-        print("file is not found")
+    if not os.path.exists(file_name):
+    
+        with open(file_name, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(["rollno", "name", "maths", "science", "english"])
         return students
+    try:
+
+        with open(file_name, 'r', newline='') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                if row:
+                    student = {
+                        "rollno": row["rollno"],
+                        "name": row["name"],
+                        "maths": int(row["maths"]),
+                        "science": int(row["science"]),
+                        "english": int(row["english"])
+                    }
+                    students.append(student)
+    except:
+        print("Error loading")
+    return students
 def save_data(students):
     f = open(file_name, mode="w")
     f.write("rollno,name,maths,science,english\n")
@@ -61,8 +61,8 @@ def add_student(students):
 
 }
     students.append(student)
-    print("student add")
-
+    save_data(students)
+    print("succeful add")
 
 def view_students(students):
 
@@ -87,7 +87,7 @@ def edit_student(students):
         if student["rollno"] == rollno:
 
             student["name"] = input("new name: ")
-
+            save_data(students)
             print("Student edit")
 
 def delete_student(students):
@@ -99,32 +99,32 @@ def delete_student(students):
         if student["rollno"] == rollno:
 
             students.remove(student)
-
+            save_data(students)
             print("Student deleted")
-student = load_data(
-)
+students = load_data()
 while True:
     print("--marsksheet---")
     print("1. add student")
     print("2. view students")
-    print("3. save and exit")
-    print("4. edit student")
-    print("5. delete student")
+   
+    print("3. edit student")
+    print("4. delete student")
+    print("5. save and exit")
     choice = input("Choose (1-5): ")
     
     if choice == "1":
-        add_student(student)
+        add_student(students)
     elif choice == "2":
-        view_students(student)
+        view_students(students)
     elif choice == "3":
-        save_data(student)
+        save_data(students)
         print("save data")
         break
     elif choice == "4":
-         edit_student(student)
+         edit_student(students)
 
     elif choice == "5":
-      delete_student(student)
+      delete_student(students)
       
     
     else:
