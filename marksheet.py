@@ -34,11 +34,11 @@ def save_data(students):
     for student in students:
         
           line = (
-            student["rollno"] + "," +
-            student["name"] + "," +
-            student["maths"] + "," +
-            student["science"] + "," +
-            student["english"] + "\n"
+            str(student["rollno"]) + "," +
+            str(student["name"]) + "," +
+            str(student["maths"]) + "," +
+            str(student["science"]) + "," +
+            str(student["english"]) + "\n"
         )
           f.write(line)
     f.close()
@@ -112,20 +112,23 @@ while True:
     print("5. save and exit")
     choice = input("Choose (1-5): ")
     
+    
     if choice == "1":
-        add_student(students)
+     add_student(students)
+
     elif choice == "2":
-        view_students(students)
+     view_students(students)
+
     elif choice == "3":
+        edit_student(students)
+
+    elif choice == "4":
+        delete_student(students)
+
+    elif choice == "5":
         save_data(students)
         print("save data")
         break
-    elif choice == "4":
-         edit_student(students)
 
-    elif choice == "5":
-      delete_student(students)
-      
-    
     else:
-         print("wrong choice")
+        print("wrong choice")
